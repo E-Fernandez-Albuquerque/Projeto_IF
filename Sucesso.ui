@@ -70,7 +70,6 @@ background-color: rgb(240, 240, 240);</string>
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

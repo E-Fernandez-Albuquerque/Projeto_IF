@@ -1,7 +1,27 @@
 from PyQt5 import uic,QtWidgets
 import pymysql
 
-#FUNÇÃO PARA BOTÃO DE CADASTRO
+#EXIBIR TELA DE CADASTRO
+def tela_cadastro():
+    inicio.hide()
+    telacadastro.show()
+
+#EXIBIR TELA DE CONSULTA
+def tela_consulta():
+    inicio.hide()
+    telaconsulta.show()
+
+#VOLTA À TELA INICIAL
+def tela_inicial_cadastro():
+    inicio.show()
+    telacadastro.hide()
+
+#VOLTA À TELA INICIAL
+def tela_inicial_consulta():
+    inicio.show()
+    telaconsulta.hide()
+
+#PARA CADASTRAR
 def cadastrar():
     cursor = banco.cursor()
 
@@ -23,21 +43,21 @@ def cadastrar():
                    'forma_pgto VARCHAR(30) NOT NULL)')
 
     #RECEPÇÃO DOS VALORES
-    nome = software.nome_cliente.text()
-    nascimento = software.nascimento.text()
-    telefone = software.telefone.text()
-    email = software.email.text()
-    cpf = software.cpf.text()
-    rg = software.rg.text()
-    corretor = software.corretor.text()
-    forma_pgto = software.forma_pgto.text()
-    if software.plano_A.isChecked():
+    nome = telacadastro.nome_cliente.text()
+    nascimento = telacadastro.nascimento.text()
+    telefone = telacadastro.telefone.text()
+    email = telacadastro.email.text()
+    cpf = telacadastro.cpf.text()
+    rg = telacadastro.rg.text()
+    corretor = telacadastro.corretor.text()
+    forma_pgto = telacadastro.forma_pgto.text()
+    if telacadastro.plano_A.isChecked():
         plano = "Plano Prime"
         valor_plano = 'R$100'
-    elif software.plano_B.isChecked():
+    elif telacadastro.plano_B.isChecked():
         plano = "Plano Premium"
         valor_plano = 'R$200'
-    elif software.plano_C.isChecked():
+    elif telacadastro.plano_C.isChecked():
         plano = "Plano Platinum"
         valor_plano = 'R$500'
 
@@ -53,12 +73,12 @@ def cadastrar():
         sucessful.show()
 
 
-#FUNÇÃO PARA BOTÃO DE CONSULTA
+#PARA CONSULTAR
 def consultar():
     #RECEBIMENTO DE DADOS PARA PESQUISA
-    consulta_nome = str(software.busca_nome.text())
-    consulta_cpf = str(software.busca_cpf.text())
-    consulta_rg = str(software.busca_rg.text())
+    consulta_nome = str(telaconsulta.busca_nome.text())
+    consulta_cpf = str(telaconsulta.busca_cpf.text())
+    consulta_rg = str(telaconsulta.busca_rg.text())
     cursor = banco.cursor()
 
     # SELEÇÃO DE BANCO DE DADOS
@@ -92,19 +112,27 @@ def close_sucess():
 def close_error():
     error.hide()
 
+
 #CARREGAMENTO DE INTERFACE
 programa = QtWidgets.QApplication([])
-software = uic.loadUi('Clients.ui')
+inicio = uic.loadUi('Inicio.ui')
+telacadastro = uic.loadUi('cadastrar.ui')
+telaconsulta = uic.loadUi('consultar.ui')
+#software = uic.loadUi('Clients.ui')
 error = uic.loadUi('Erro.ui')
 sucessful = uic.loadUi('Sucesso.ui')
 resultado_pesquisa = uic.loadUi('consulta.ui')
 
 #BOTOES E AÇÕES
-software.cadastrar.clicked.connect(cadastrar)
-software.buscar.clicked.connect(consultar)
-error.ok_erro.clicked.connect(close_error)
-sucessful.ok_cadastro.clicked.connect(close_sucess)
+telacadastro.btn_inicial.clicked.connect(tela_inicial_cadastro) #Tela de cadastro para inicial
+telaconsulta.btn_inicial.clicked.connect(tela_inicial_consulta) #Tela de consulta para inicial
+inicio.btn_cadastro.clicked.connect(tela_cadastro) #Tela de inicio para cadastro
+inicio.btn_consulta.clicked.connect(tela_consulta) #Tela de inicio para consulta
+telacadastro.cadastrar.clicked.connect(cadastrar) #Tentar cadastro
+telaconsulta.buscar.clicked.connect(consultar) #Tentar consulta
+error.ok_erro.clicked.connect(close_error) #Fechar mensagem de erro
+sucessful.ok_cadastro.clicked.connect(close_sucess) #Fechar mensagem de sucesso
 
 #EXIBIÇÃO DE JANELA
-software.show()
+inicio.show()
 programa.exec()
