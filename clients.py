@@ -64,7 +64,7 @@ def cadastrar():
     #INSERÇÃO EM BANCO DE DADOS
     try:
         comando_SQL = 'INSERT INTO clientes (nome, nascimento, telefone, email, cpf, rg, plano, valor_plano, corretor, forma_pgto) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
-        dados = (str(nome),str(nascimento),str(telefone),str(email),str(cpf),str(rg),str(plano),str(valor_plano),str(corretor),str(forma_pgto))
+        dados = (nome,nascimento,telefone,email,cpf,rg,plano,valor_plano,corretor,forma_pgto)
         cursor.execute(comando_SQL, dados)
         banco.commit()
     except:
@@ -101,7 +101,7 @@ def consultar():
 banco = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    passwd = ''
+    passwd = 'fernandez'
 )
 
 #FECHAMENTO DE TELA DE SUCESSO DE CADASTRO

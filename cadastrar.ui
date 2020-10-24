@@ -32,7 +32,7 @@
      <string>Cadastro de clientes</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -178,8 +178,14 @@ background-color: white;</string>
            <string notr="true">border: 1px solid rgb(0,0,0);
 background-color: white;</string>
           </property>
+          <property name="inputMethodHints">
+           <set>Qt::ImhDigitsOnly</set>
+          </property>
           <property name="inputMask">
-           <string/>
+           <string>(xx) x.xxxx-xxxx</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
           </property>
           <property name="placeholderText">
            <string>(xx) 9.9999-9999</string>
@@ -257,6 +263,12 @@ background-color: white;</string>
            <string notr="true">border: 1px solid rgb(0,0,0);
 background-color: white;</string>
           </property>
+          <property name="inputMethodHints">
+           <set>Qt::ImhDigitsOnly</set>
+          </property>
+          <property name="inputMask">
+           <string>xxx.xxx.xxx-xx</string>
+          </property>
           <property name="placeholderText">
            <string>xxx.xxx.xxx-xx</string>
           </property>
@@ -282,6 +294,12 @@ background-color: white;</string>
           <property name="styleSheet">
            <string notr="true">border: 1px solid rgb(0,0,0);
 background-color: white;</string>
+          </property>
+          <property name="inputMethodHints">
+           <set>Qt::ImhDigitsOnly</set>
+          </property>
+          <property name="inputMask">
+           <string/>
           </property>
           <property name="placeholderText">
            <string/>
