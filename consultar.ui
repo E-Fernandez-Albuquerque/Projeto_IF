@@ -166,6 +166,9 @@ background-color: white;</string>
         <pointsize>9</pointsize>
        </font>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Limpar todos os campos&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="styleSheet">
        <string notr="true">border: 1px solid rgb(00,0,0);
 background-color: rgb(240, 240, 240);</string>
@@ -189,6 +192,9 @@ background-color: rgb(240, 240, 240);</string>
         <weight>75</weight>
         <bold>true</bold>
        </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pesquisar cliente no banco de dados da empresa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">border: 1px solid rgb(0,0,0);

@@ -43,6 +43,9 @@
       <pointsize>11</pointsize>
      </font>
     </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Direciona para a tela de cadastro de novos clientes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">border: 1px solid rgb(0,0,0);
 background-color: rgb(240, 240, 240);</string>
@@ -64,6 +67,9 @@ background-color: rgb(240, 240, 240);</string>
      <font>
       <pointsize>11</pointsize>
      </font>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Direciona para a tela de consulta de clientes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">border: 1px solid rgb(0,0,0);
