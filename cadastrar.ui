@@ -182,7 +182,7 @@ background-color: white;</string>
            <set>Qt::ImhDigitsOnly</set>
           </property>
           <property name="inputMask">
-           <string>(xx) x.xxxx-xxxx</string>
+           <string/>
           </property>
           <property name="frame">
            <bool>true</bool>
@@ -267,7 +267,7 @@ background-color: white;</string>
            <set>Qt::ImhDigitsOnly</set>
           </property>
           <property name="inputMask">
-           <string>xxx.xxx.xxx-xx</string>
+           <string/>
           </property>
           <property name="placeholderText">
            <string>xxx.xxx.xxx-xx</string>
