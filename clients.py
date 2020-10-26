@@ -31,11 +31,12 @@ def cadastrar():
 
     #CRIAÇÃO DA TABLE, SE NÃO EXISTENTE
     cursor.execute('CREATE TABLE IF NOT EXISTS clientes ('
+                   'id INT AUTO_INCREMENT PRIMARY KEY, '
                    'nome VARCHAR(250) NOT NULL, '
                    'nascimento VARCHAR(20), '
                    'telefone VARCHAR(20) NOT NULL, '
                    'email VARCHAR(255) UNIQUE, '
-                   'cpf VARCHAR(20) NOT NULL PRIMARY KEY, '
+                   'cpf VARCHAR(20) NOT NULL UNIQUE, '
                    'rg VARCHAR(20) NOT NULL UNIQUE, '
                    'plano VARCHAR(60) NOT NULL, '
                    'valor_plano VARCHAR(10) NOT NULL,'
@@ -97,12 +98,6 @@ def consultar():
     #EXIBIR TABELA COM RETORNO DE BANCO DE DADOS
     resultado_pesquisa.show()
 
-#DETALHAMENTO DE BANCO DE DADOS A SER USADO
-banco = pymysql.connect(
-    host = 'localhost',
-    user = 'root',
-    passwd = 'fernandez'
-)
 
 #FECHAMENTO DE TELA DE SUCESSO DE CADASTRO
 def close_sucess():
@@ -113,15 +108,54 @@ def close_error():
     error.hide()
 
 
+def solicitar_exc():
+    exclusao.show()
+
+
+def excluir():
+    try:
+        excluir = resultado_pesquisa.lista_resultados.currentRow()
+        resultado_pesquisa.lista_resultados.removeRow(excluir)
+        print(excluir)
+
+        cursor = banco.cursor()
+        cursor.execute('SELECT id FROM clientes')
+        dados_lidos = cursor.fetchall()
+        print(dados_lidos)
+        id_deletar = dados_lidos[excluir][0]
+        print(id_deletar)
+        cursor.execute("DELETE FROM clientes WHERE id=" + str(id_deletar))
+        banco.commit()
+        exclusao.hide()
+    except:
+        print('erro')
+    else:
+        print('ok')
+
+
+def cancelar_excluir():
+    exclusao.hide()
+
+
+#DETALHAMENTO DE BANCO DE DADOS A SER USADO
+banco = pymysql.connect(
+    host = 'localhost',
+    user = 'root',
+    passwd = ''
+)
+
+
 #CARREGAMENTO DE INTERFACE
 programa = QtWidgets.QApplication([])
 inicio = uic.loadUi('Inicio.ui')
 telacadastro = uic.loadUi('cadastrar.ui')
 telaconsulta = uic.loadUi('consultar.ui')
+exclusao = uic.loadUi('excluir.ui')
 #software = uic.loadUi('Clients.ui')
 error = uic.loadUi('Erro.ui')
 sucessful = uic.loadUi('Sucesso.ui')
 resultado_pesquisa = uic.loadUi('consulta.ui')
+
 
 #BOTOES E AÇÕES
 telacadastro.btn_inicial.clicked.connect(tela_inicial_cadastro) #Tela de cadastro para inicial
@@ -132,6 +166,9 @@ telacadastro.cadastrar.clicked.connect(cadastrar) #Tentar cadastro
 telaconsulta.buscar.clicked.connect(consultar) #Tentar consulta
 error.ok_erro.clicked.connect(close_error) #Fechar mensagem de erro
 sucessful.ok_cadastro.clicked.connect(close_sucess) #Fechar mensagem de sucesso
+resultado_pesquisa.excluir.clicked.connect(solicitar_exc)
+exclusao.ok_excluir.clicked.connect(excluir)
+exclusao.cancelar_excluir.clicked.connect(cancelar_excluir)
 
 #EXIBIÇÃO DE JANELA
 inicio.show()

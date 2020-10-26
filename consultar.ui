@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Consulta</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(222, 222, 222);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frame_9">
     <property name="geometry">
