@@ -80,23 +80,31 @@ def consultar():
     consulta_nome = str(telaconsulta.busca_nome.text())
     consulta_cpf = str(telaconsulta.busca_cpf.text())
     consulta_rg = str(telaconsulta.busca_rg.text())
-    cursor = banco.cursor()
+
 
     # SELEÇÃO DE BANCO DE DADOS
-    cursor.execute('USE plano_de_saude')
-    comando_SQL = f'SELECT * FROM clientes WHERE nome LIKE "%{consulta_nome}%" AND cpf LIKE "%{consulta_cpf}%" AND rg LIKE "%{consulta_rg}%"'
-    cursor.execute(comando_SQL)
-    retorno = cursor.fetchall()
+    try:
+        cursor = banco.cursor()
+        cursor.execute('USE plano_de_saude')
+        comando_SQL = f'SELECT * FROM clientes WHERE nome LIKE "%{consulta_nome}%" AND cpf LIKE "%{consulta_cpf}%" AND rg LIKE "%{consulta_rg}%"'
+        cursor.execute(comando_SQL)
+        retorno = cursor.fetchall()
 
-    #CRIAÇÃO DE TABELA PARA EXIBIÇÃO DE RESULTADOS
-    resultado_pesquisa.lista_resultados.setRowCount(len(retorno))
-    resultado_pesquisa.lista_resultados.setColumnCount(10)
-    #ESCRITA DE DADOS DO BANCO EM TABELA
-    for i in range(0,len(retorno)):
-        for j in range(0,10):
-            resultado_pesquisa.lista_resultados.setItem(i,j,QtWidgets.QTableWidgetItem(str(retorno[i][j])))
-    #EXIBIR TABELA COM RETORNO DE BANCO DE DADOS
-    resultado_pesquisa.show()
+        # CRIAÇÃO DE TABELA PARA EXIBIÇÃO DE RESULTADOS
+        resultado_pesquisa.lista_resultados.setRowCount(len(retorno))
+        resultado_pesquisa.lista_resultados.setColumnCount(11)
+        # ESCRITA DE DADOS DO BANCO EM TABELA
+        for i in range(0, len(retorno)):
+            for j in range(0, 11):
+                resultado_pesquisa.lista_resultados.setItem(i, j, QtWidgets.QTableWidgetItem(str(retorno[i][j])))
+        # EXIBIR TABELA COM RETORNO DE BANCO DE DADOS
+        resultado_pesquisa.show()
+    except:
+        fail_banco.show()
+    else:
+        print('Ok')
+
+
 
 
 #FECHAMENTO DE TELA DE SUCESSO DE CADASTRO
@@ -108,29 +116,28 @@ def close_error():
     error.hide()
 
 
+def close_fail():
+    fail_banco.hide()
+
+
 def solicitar_exc():
     exclusao.show()
 
 
 def excluir():
-    try:
-        excluir = resultado_pesquisa.lista_resultados.currentRow()
-        resultado_pesquisa.lista_resultados.removeRow(excluir)
-        print(excluir)
+    excluir = resultado_pesquisa.lista_resultados.currentRow()
+    resultado_pesquisa.lista_resultados.removeRow(excluir)
+    print(excluir)
 
-        cursor = banco.cursor()
-        cursor.execute('SELECT id FROM clientes')
-        dados_lidos = cursor.fetchall()
-        print(dados_lidos)
-        id_deletar = dados_lidos[excluir][0]
-        print(id_deletar)
-        cursor.execute("DELETE FROM clientes WHERE id=" + str(id_deletar))
-        banco.commit()
-        exclusao.hide()
-    except:
-        print('erro')
-    else:
-        print('ok')
+    cursor = banco.cursor()
+    cursor.execute('SELECT id FROM clientes')
+    dados_lidos = cursor.fetchall()
+    print(dados_lidos)
+    id_deletar = dados_lidos[excluir][0]
+    print(id_deletar)
+    cursor.execute("DELETE FROM clientes WHERE id=" + str(id_deletar))
+    banco.commit()
+    exclusao.hide()
 
 
 def cancelar_excluir():
@@ -141,7 +148,7 @@ def cancelar_excluir():
 banco = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    passwd = ''
+    passwd = 'fernandez'
 )
 
 
@@ -151,8 +158,8 @@ inicio = uic.loadUi('Inicio.ui')
 telacadastro = uic.loadUi('cadastrar.ui')
 telaconsulta = uic.loadUi('consultar.ui')
 exclusao = uic.loadUi('excluir.ui')
-#software = uic.loadUi('Clients.ui')
 error = uic.loadUi('Erro.ui')
+fail_banco = uic.loadUi('fail_banco.ui')
 sucessful = uic.loadUi('Sucesso.ui')
 resultado_pesquisa = uic.loadUi('consulta.ui')
 
@@ -166,9 +173,10 @@ telacadastro.cadastrar.clicked.connect(cadastrar) #Tentar cadastro
 telaconsulta.buscar.clicked.connect(consultar) #Tentar consulta
 error.ok_erro.clicked.connect(close_error) #Fechar mensagem de erro
 sucessful.ok_cadastro.clicked.connect(close_sucess) #Fechar mensagem de sucesso
-resultado_pesquisa.excluir.clicked.connect(solicitar_exc)
-exclusao.ok_excluir.clicked.connect(excluir)
-exclusao.cancelar_excluir.clicked.connect(cancelar_excluir)
+resultado_pesquisa.excluir.clicked.connect(solicitar_exc) #Confirma exclusão de dado
+exclusao.ok_excluir.clicked.connect(excluir) #Abre a caixa de diálogo com confirmação de exclusão
+exclusao.cancelar_excluir.clicked.connect(cancelar_excluir) #Cancela a exclusão de dados
+fail_banco.ok_fail.clicked.connect(close_fail)
 
 #EXIBIÇÃO DE JANELA
 inicio.show()
