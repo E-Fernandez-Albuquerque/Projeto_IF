@@ -148,7 +148,7 @@ def cancelar_excluir():
 banco = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    passwd = 'fernandez'
+    passwd = ''
 )
 
 
