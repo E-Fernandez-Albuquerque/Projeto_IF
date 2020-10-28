@@ -6,20 +6,24 @@ def tela_cadastro():
     inicio.hide()
     telacadastro.show()
 
+
 #EXIBIR TELA DE CONSULTA
 def tela_consulta():
     inicio.hide()
     telaconsulta.show()
+
 
 #VOLTA À TELA INICIAL
 def tela_inicial_cadastro():
     inicio.show()
     telacadastro.hide()
 
+
 #VOLTA À TELA INICIAL
 def tela_inicial_consulta():
     inicio.show()
     telaconsulta.hide()
+
 
 #PARA CADASTRAR
 def cadastrar():
@@ -81,7 +85,6 @@ def consultar():
     consulta_cpf = str(telaconsulta.busca_cpf.text())
     consulta_rg = str(telaconsulta.busca_rg.text())
 
-
     # SELEÇÃO DE BANCO DE DADOS
     try:
         cursor = banco.cursor()
@@ -105,29 +108,30 @@ def consultar():
         print('Ok')
 
 
-
-
 #FECHAMENTO DE TELA DE SUCESSO DE CADASTRO
 def close_sucess():
     sucessful.hide()
 
 
+#FECHAMENTO DE TELA DE ERRO
 def close_error():
     error.hide()
 
 
+#FECHAMENTO DE TELA DE FALHA DE ACESSO BD
 def close_fail():
     fail_banco.hide()
 
 
+#ABERTURA DE TELA PARA CONFIRMAR EXCLUSÃO
 def solicitar_exc():
     exclusao.show()
 
 
+#FUNÇÃO DE EXCLUSÃO DE BANCO DE DADOS
 def excluir():
     excluir = resultado_pesquisa.lista_resultados.currentRow()
     resultado_pesquisa.lista_resultados.removeRow(excluir)
-    print(excluir)
 
     cursor = banco.cursor()
     cursor.execute('SELECT id FROM clientes')
@@ -140,6 +144,7 @@ def excluir():
     exclusao.hide()
 
 
+#CANCELAR EXCLUSÃO DE DADO
 def cancelar_excluir():
     exclusao.hide()
 
@@ -176,7 +181,8 @@ sucessful.ok_cadastro.clicked.connect(close_sucess) #Fechar mensagem de sucesso
 resultado_pesquisa.excluir.clicked.connect(solicitar_exc) #Confirma exclusão de dado
 exclusao.ok_excluir.clicked.connect(excluir) #Abre a caixa de diálogo com confirmação de exclusão
 exclusao.cancelar_excluir.clicked.connect(cancelar_excluir) #Cancela a exclusão de dados
-fail_banco.ok_fail.clicked.connect(close_fail)
+fail_banco.ok_fail.clicked.connect(close_fail) #Fecha janela de erro de acesso ao banco de dados
+
 
 #EXIBIÇÃO DE JANELA
 inicio.show()
