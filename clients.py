@@ -131,14 +131,26 @@ def solicitar_exc():
 #FUNÇÃO DE EXCLUSÃO DE BANCO DE DADOS
 def excluir():
     excluir = resultado_pesquisa.lista_resultados.currentRow()
+    print(excluir)
     resultado_pesquisa.lista_resultados.removeRow(excluir)
 
+    consulta_nome = str(telaconsulta.busca_nome.text())
+    consulta_cpf = str(telaconsulta.busca_cpf.text())
+    consulta_rg = str(telaconsulta.busca_rg.text())
+
     cursor = banco.cursor()
-    cursor.execute('SELECT id FROM clientes')
+    cursor.execute(f'SELECT id FROM clientes WHERE nome LIKE "%{consulta_nome}%" AND cpf LIKE "%{consulta_cpf}%" AND rg LIKE "%{consulta_rg}%"')
     dados_lidos = cursor.fetchall()
-    print(dados_lidos)
-    id_deletar = dados_lidos[excluir][0]
+    dados = []
+    for x in dados_lidos:
+        dados.append(x[0])
+        dados.sort()
+    print(dados)
+    id_deletar = dados[excluir]
     print(id_deletar)
+
+    print(dados_lidos)
+    #id_deletar = dados_lidos[excluir][0]
     cursor.execute("DELETE FROM clientes WHERE id=" + str(id_deletar))
     banco.commit()
     exclusao.hide()
